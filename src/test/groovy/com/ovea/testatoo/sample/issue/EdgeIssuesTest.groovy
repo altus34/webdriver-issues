@@ -6,14 +6,11 @@ import org.junit.ClassRule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.testatoo.bundle.html5.list.MultiSelect
-import org.testatoo.core.ComponentException
-import org.testatoo.core.component.CheckBox
-import org.testatoo.core.component.Item
-import org.testatoo.core.component.ListBox
+import org.openqa.selenium.By
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.WebElement
 
-import static org.junit.Assert.fail
-import static org.testatoo.core.Testatoo.$
+import static org.testatoo.core.Testatoo.getConfig
 import static org.testatoo.core.Testatoo.visit
 
 /**
@@ -30,128 +27,16 @@ class EdgeIssuesTest {
     }
 
     @Test
-    void listbox_should_have_expected_behaviours() {
-        ListBox cities = $('#cities') as MultiSelect
-
-        assert cities.label() == 'Cities list'
-        assert cities.items().size() == 6
-        assert cities.visibleItems().size() == 3
-
-        assert cities
-
-        Item montreal = cities.item('Montreal')
-        Item quebec = cities.item('Quebec')
-        Item montpellier = cities.item('Montpellier')
-        Item newYork = cities.item('New York')
-        Item casablanca = cities.item('Casablanca')
-        Item munich = cities.item('Munich')
-
-        assert montreal.selected()
-        assert montpellier.enabled()
-        assert cities.item('Montreal').selected()
-
-        assert !quebec.selected()
-        assert !quebec.enabled()
-        assert !cities.item('Quebec').selected()
-
-        assert !montpellier.selected()
-        assert !cities.item('Montpellier').selected()
-
-        assert !newYork.selected()
-        assert !cities.item('New York').selected()
-
-        assert !casablanca.selected()
-        assert !cities.item('Casablanca').selected()
-
-        assert !munich.selected()
-        assert !cities.item('Munich').selected()
-
-        assert cities.selectedItems().containsAll(montreal)
-
-        cities.unselect(montreal)
-        cities.select(newYork, munich)
-
-        assert cities.selectedItems().containsAll(newYork, munich)
-
-        cities.select('Montpellier', 'Montreal')
-        assert cities.item('Montpellier').selected()
-        assert cities.item('Montreal').selected()
-        assert cities.selectedItems().containsAll(newYork, munich, montpellier, montreal)
-
-        montreal.unselect()
-        montpellier.unselect()
-
-        assert !cities.item('Montreal').selected()
-        assert !cities.item('Montpellier').selected()
-        assert cities.item('New York').selected()
-        assert cities.item('Munich').selected()
-
-        cities.select(montreal, montpellier)
-        assert cities.item('Montreal').selected()
-        assert cities.item('Montpellier').selected()
-        assert cities.item('New York').selected()
-        assert cities.item('Munich').selected()
-
-        montpellier.click() // Now just Montpellier is selected
-        assert montpellier.selected()
-        assert !montreal.selected()
-        assert !newYork.selected()
-        assert !munich.selected()
-
-        try {
-            quebec.select()
-            fail()
-        } catch (ComponentException e) {
-            assert e.message == 'Option Quebec is disabled and cannot be selected'
-        }
-
-        try {
-            quebec.unselect()
-            fail()
-        } catch (ComponentException e) {
-            assert e.message == 'Option Quebec is disabled and cannot be unselected'
-        }
-
-        try {
-            newYork.unselect()
-            fail()
-        } catch (ComponentException e) {
-            assert e.message == 'Option New York is already unselected and cannot be unselected'
-        }
-
-        try {
-            montpellier.select()
-            fail()
-        } catch (ComponentException e) {
-            assert e.message == 'Option Montpellier is already selected and cannot be selected'
-        }
-    }
-
-    @Test
     void checkbox_should_have_expected_behaviours() {
-        CheckBox checkBox = $('#checkbox') as org.testatoo.bundle.html5.CheckBox
-        assert checkBox.label() == 'Check me out'
-        assert !checkBox.checked()
-        checkBox.check()
-        assert checkBox.checked()
-        checkBox.uncheck()
-        assert !checkBox.checked()
-        checkBox.click()
-        assert checkBox.checked()
+        WebDriver driver = config.evaluator.driver
 
-        try {
-            checkBox.check()
-            fail()
-        } catch (ComponentException e) {
-            assert e.message == 'CheckBox CheckBox:checkbox is already checked and cannot be checked'
-        }
+        WebElement _checkBox = driver.findElement(By.id("checkbox"))
+        assert !_checkBox.selected
 
-        try {
-            checkBox.uncheck()
-            checkBox.uncheck()
-            fail()
-        } catch (ComponentException e) {
-            assert e.message == 'CheckBox CheckBox:checkbox is already unchecked and cannot be unchecked'
-        }
+        _checkBox.click()
+        assert _checkBox.selected
+
+        _checkBox.click()
+        assert !_checkBox.selected
     }
 }

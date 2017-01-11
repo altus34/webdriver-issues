@@ -38,7 +38,7 @@ class WebDriverConfig extends ExternalResource {
     @Override
     protected void before() throws Throwable {
         // Defined by JVM maven arguments
-        final String browser = System.getProperty('browser') ?: 'Chrome'
+        final String browser = System.getProperty('browser') ?: 'Edge' // defined in the maven profile
         final String drivers = System.getProperty('drivers') ?: '/usr/bin/'
 
         startJetty()
