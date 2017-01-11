@@ -8,11 +8,13 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.testatoo.bundle.html5.list.MultiSelect
 import org.testatoo.core.ComponentException
+import org.testatoo.core.component.CheckBox
 import org.testatoo.core.component.Item
 import org.testatoo.core.component.ListBox
 
 import static org.junit.Assert.fail
-import static org.testatoo.core.Testatoo.*
+import static org.testatoo.core.Testatoo.$
+import static org.testatoo.core.Testatoo.visit
 
 /**
  * @author David Avenante (d.avenante@gmail.com)
@@ -28,9 +30,7 @@ class EdgeIssuesTest {
     }
 
     @Test
-    void should_have_expected_behaviours() {
-        assert MultiSelect in ListBox
-
+    void listbox_should_have_expected_behaviours() {
         ListBox cities = $('#cities') as MultiSelect
 
         assert cities.label() == 'Cities list'
@@ -124,6 +124,34 @@ class EdgeIssuesTest {
             fail()
         } catch (ComponentException e) {
             assert e.message == 'Option Montpellier is already selected and cannot be selected'
+        }
+    }
+
+    @Test
+    void checkbox_should_have_expected_behaviours() {
+        CheckBox checkBox = $('#checkbox') as org.testatoo.bundle.html5.CheckBox
+        assert checkBox.label() == 'Check me out'
+        assert !checkBox.checked()
+        checkBox.check()
+        assert checkBox.checked()
+        checkBox.uncheck()
+        assert !checkBox.checked()
+        checkBox.click()
+        assert checkBox.checked()
+
+        try {
+            checkBox.check()
+            fail()
+        } catch (ComponentException e) {
+            assert e.message == 'CheckBox CheckBox:checkbox is already checked and cannot be checked'
+        }
+
+        try {
+            checkBox.uncheck()
+            checkBox.uncheck()
+            fail()
+        } catch (ComponentException e) {
+            assert e.message == 'CheckBox CheckBox:checkbox is already unchecked and cannot be unchecked'
         }
     }
 }
