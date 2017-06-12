@@ -14,9 +14,10 @@
     <description>Webdriver Issues</description>
 
     <properties>
-        <testatoo.version>2.0.b26</testatoo.version>
         <jdk.version>1.7</jdk.version>
-        <groovy.version>2.3.6</groovy.version>
+        <groovy.version>2.4.7</groovy.version>
+        <selenium.version>3.4.0</selenium.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <build>
@@ -50,9 +51,15 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>${groovy.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>3.4.0</version>
+            <version>${selenium.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -63,13 +70,13 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
-            <version>9.4.0.RC2</version>
+            <version>9.4.5.v20170502</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-util</artifactId>
-            <version>9.4.0.RC2</version>
+            <version>9.4.5.v20170502</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
