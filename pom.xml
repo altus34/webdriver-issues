@@ -50,10 +50,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.testatoo</groupId>
-            <artifactId>testatoo</artifactId>
-            <version>${testatoo.version}</version>
-            <scope>test</scope>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.4.0</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

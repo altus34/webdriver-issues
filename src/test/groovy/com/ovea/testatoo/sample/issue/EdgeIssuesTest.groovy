@@ -10,25 +10,22 @@ import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 
-import static org.testatoo.core.Testatoo.getConfig
-import static org.testatoo.core.Testatoo.visit
-
 /**
  * @author David Avenante (d.avenante@gmail.com)
  */
 @RunWith(JUnit4)
 class EdgeIssuesTest {
     @ClassRule
-    public static WebDriverConfig driver = new WebDriverConfig()
+    public static WebDriverConfig config = new WebDriverConfig()
 
     @BeforeClass
     static void before() {
-        visit 'http://localhost:8080/index.html'
+        config.webDriver.get('http://localhost:8080/index.html')
     }
 
     @Test
     void checkbox_should_have_expected_behaviours() {
-        WebDriver driver = config.evaluator.driver
+        WebDriver driver = config.webDriver
 
         WebElement _checkBox = driver.findElement(By.id("checkbox"))
         assert !_checkBox.selected
