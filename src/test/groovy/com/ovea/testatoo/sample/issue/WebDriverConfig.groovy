@@ -42,7 +42,7 @@ class WebDriverConfig extends ExternalResource {
     @Override
     protected void before() throws Throwable {
         // Defined by JVM maven arguments
-        final String browser = System.getProperty('browser') ?: 'Chrome'
+        final String browser = System.getProperty('browser') ?: 'Firefox'
         BASE_URL = 'http://localhost:8080/'
 
         startJetty()
