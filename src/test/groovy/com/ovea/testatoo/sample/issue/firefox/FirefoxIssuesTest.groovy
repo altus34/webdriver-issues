@@ -36,6 +36,7 @@ class FirefoxIssuesTest {
 
     @Test
     void multiselect_should_have_expected_feature_on_click() {
+        // https://github.com/mozilla/geckodriver/issues/1176
         config.webDriver.get('http://localhost:8080/index.html')
 
         // Montreal is already selected in the html
