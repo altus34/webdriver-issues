@@ -5,6 +5,7 @@ import org.junit.ClassRule
 import org.junit.Test
 import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
+import org.openqa.selenium.interactions.Actions
 
 class ChromeIssuesTest {
     @ClassRule
@@ -19,7 +20,11 @@ class ChromeIssuesTest {
         assert montreal.isSelected()
 
         WebElement montpellier = config.webDriver.findElement(By.id('montpellier'))
-        montpellier.click()
+
+        Actions action = new Actions(config.webDriver)
+        action.click(montpellier)
+        action.build().perform()
+//        montpellier.click()
 
         assert montpellier.isSelected()
         assert !montreal.isSelected()

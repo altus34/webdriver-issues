@@ -6,7 +6,6 @@ import org.junit.Test
 import org.openqa.selenium.By
 import org.openqa.selenium.Keys
 import org.openqa.selenium.WebElement
-import org.openqa.selenium.interactions.Action
 import org.openqa.selenium.interactions.Actions
 
 class FirefoxIssuesTest {
@@ -21,32 +20,28 @@ class FirefoxIssuesTest {
         WebElement input =  config.webDriver.findElement(By.id('textfield'))
         input.click()
 
-        Actions actions = new Actions(config.webDriver)
-        Action action = actions
+        new Actions(config.webDriver)
                 .keyDown(input, Keys.SHIFT)
                 .sendKeys(input, 'value')
                 .keyUp(input, Keys.SHIFT)
-                .build()
-
-        action.perform()
+                .perform()
 
         assert input.getAttribute('value') == 'VALUE'
 
     }
 
     @Test
-    void multiselect_should_have_expected_feature_on_click() {
+    void single_select_should_have_expected_feature_on_click_with_action() {
         // https://github.com/mozilla/geckodriver/issues/1176
         config.webDriver.get('http://localhost:8080/index.html')
 
-        // Montreal is already selected in the html
-        WebElement montreal = config.webDriver.findElement(By.id('montreal'))
-        assert montreal.isSelected()
+        WebElement ubuntu = config.webDriver.findElement(By.id('ubuntu'))
+        assert !ubuntu.isSelected()
 
-        WebElement montpellier = config.webDriver.findElement(By.id('montpellier'))
-        montpellier.click()
+        new Actions(config.webDriver)
+                .click(ubuntu)
+                .perform()
 
-        assert montpellier.isSelected()
-        assert !montreal.isSelected()
+        assert ubuntu.isSelected()
     }
 }
