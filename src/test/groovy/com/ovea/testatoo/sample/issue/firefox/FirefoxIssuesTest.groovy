@@ -27,7 +27,6 @@ class FirefoxIssuesTest {
                 .perform()
 
         assert input.getAttribute('value') == 'VALUE'
-
     }
 
     @Test
@@ -43,5 +42,21 @@ class FirefoxIssuesTest {
                 .perform()
 
         assert ubuntu.isSelected()
+    }
+
+    @Test
+    void double_click_should_have_expected_feature_on_click_with_action() {
+        config.webDriver.get('http://localhost:8080/index.html')
+
+        WebElement button = config.webDriver.findElement(By.id('button_1'))
+
+        assert button.getAttribute('value') == 'Button'
+
+        new Actions(config.webDriver)
+                .doubleClick(button)
+                .perform()
+
+        assert button.getAttribute('value') == 'Button Double Clicked!'
+
     }
 }
